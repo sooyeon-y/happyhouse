@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <!-- 네임스페이스를 DAO 인터페이스의 풀네임으로 맞춰준다. -->
+<mapper namespace="notice">
+<!-- <mapper namespace="com.ssafy.happyhouse.model.dao.NoticeDao"> -->
+	
+	<insert id="addNotice" parameterType="Notice">
+		insert into notice (title, content, writeDate, userid)
+		values (#{title}, #{content}, #{writeDate}, #{userId})
+	</insert>
+	
+	<select id="getNotice" resultType="Notice" parameterType="int">
+		select * from notice where num = #{num}
+	</select>
+	
+	<select id="printNoticeList" resultType="Notice">
+		select * from notice order by num desc;
+	</select>
+	
+	<delete id="deleteNotice" parameterType="int">
+		delete from notice where num = #{num}
+	</delete>
+	
+	<update id="modifyNotice" parameterType="Notice">
+		update notice set
+		title = #{title}, content = #{content}, writeDate = #{writeDate}
+		where num = #{num}
+	</update>
+		
+</mapper>

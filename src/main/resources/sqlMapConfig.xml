@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+  
+<configuration>
+	<typeAliases>	
+		<package name="com.ssafy.happyhouse.model.dto"/>
+	</typeAliases>
+	
+	<!-- SQL 매핑파일 리스트 -->
+	<mappers>
+		<mapper resource="mapper/UserInfoMapper.xml"/>
+		<mapper resource="mapper/NoticeMapper.xml"/>
+		<mapper resource="mapper/HouseInfoMapper.xml"/>
+		<mapper resource="mapper/HouseDealMapper.xml"/>
+		<mapper resource="mapper/QnAMapper.xml"/>
+	</mappers>
+</configuration>
+
+
+

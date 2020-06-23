@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="houseinfo">
+	<!-- <mapper namespace="com.ssafy.happyhouse.model.dao.HouseInfoDao"> -->
+
+	<select id="searchAllHouseInfo" resultType="HouseInfo">
+		select * from
+		houseinfo;
+	</select>
+
+	<select id="searchLatlng" parameterType="hashMap"
+		resultType="HouseInfo">
+		select * from houseinfo
+		<where>
+			<if test="dong != null"> and dong like concat('%', #{dong}, '%')</if>
+			<if test="aptName != null"> and aptName like concat('%', #{aptName}, '%')</if>
+		</where>
+	
+<!-- 			select * 
+		from housedeal hd 
+		inner join houseinfo hi
+		on hi.dong = #{dong} and hi.aptName = #{aptName} -->
+
+	</select>
+	
+	<select id="searchInfo" parameterType="hashMap" resultType="HouseInfo">
+		select * from houseinfo		
+		where dong = #{dong} and aptName = #{aptName}
+	</select>
+
+	<select id="getgulist" resultType="AreaGu">
+		select * from gu_code;
+	</select>
+	
+	<select id="getdonglist" parameterType="int" resultType="String">
+		select distinct dong from houseinfo
+		where code = #{code}
+	</select>
+
+	<select id="searchCURInfo" parameterType="hashMap" resultType="HouseInfo">
+		select * from houseinfo		
+		where dong = #{dong} and aptName = #{aptName}
+	</select>
+	
+</mapper>

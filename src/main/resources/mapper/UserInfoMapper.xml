@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <!-- 네임스페이스를 DAO 인터페이스의 풀네임으로 맞춰준다. -->
+ <mapper namespace="userinfo">
+<!--  
+ <mapper namespace="com.ssafy.happyhouse.model.dao.UserInfoDao">
+ -->
+	<select id="login" resultType="UserInfo" parameterType="hashMap">
+		select * from userinfo where id = #{id} and password = #{password}
+	</select>
+	
+	<insert id="join" parameterType="UserInfo">
+		insert into userinfo (id, password, name, address, contact, isAdmin)
+		values (#{id}, #{password}, #{name}, #{address}, #{contact}, #{isAdmin})
+	</insert>
+	
+	<select id="findUser" resultType="UserInfo" parameterType="hashMap">
+		select * from userinfo where id = #{id} and contact = #{contact}
+	</select>
+	
+	<delete id="delete" parameterType="hashMap">
+		delete from userinfo where id = #{id} and password = #{password}
+	</delete>
+	
+	<update id="modify" parameterType="UserInfo">
+		update userinfo set
+		password = #{password}, name = #{name}, 
+		address = #{address}, contact = #{contact}, isAdmin = #{isAdmin}
+		where id = #{id}
+	</update>
+	
+	<select id="printUserList" resultType="UserInfo">
+		select * from userinfo order by id;
+	</select>
+		
+</mapper>
+
+
+
+
+
+
+

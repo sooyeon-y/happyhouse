@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<!-- map 이용 + 동적 쿼리
+	like 부분에서 concat 사용해야 함, ArrayList foreach로 순회하는 법 알아두기
+-->
+<!-- <mapper namespace="com.ssafy.happyhouse.model.dao.HouseDao"> -->
+
+<mapper namespace="housedeal">
+	<select id="searchAll" resultType="HouseDeal" parameterType="hashMap">
+		select * from housedeal
+		<where>
+		<if test = "dong != null"> and dong like concat('%', #{dong}, '%')</if>
+		<if test = "aptName != null"> and aptName like concat('%', #{aptName}, '%')</if>
+		and type in (
+			<foreach collection="type" item="obj" separator=",">
+				#{obj}
+			</foreach>
+		)
+		</where>
+		limit 500;
+	</select>
+	
+	<select id="search" parameterType="int" resultType="HouseDeal">
+		select * from housedeal where no = #{no}
+	</select>
+	
+	<select id="searchimg" parameterType="hashMap" resultType="string">
+		select img from houseinfo
+		where dong = #{dong} and aptName = #{aptName}
+	</select>
+
+	<select id="searchForGraph" parameterType="hashMap" resultType="HouseDeal">
+		select * from housedeal
+		where dong like concat('%', #{dong}, '%') and aptName like concat('%', #{aptName}, '%') and area = #{area}
+		order by dealYear, dealMonth, dealDay
+	</select>
+	
+	<insert id="compareSave" parameterType="hashMap">
+		insert into compare_history (userid, date, compare1, compare2, weight)
+		values(#{userid}, now(), #{leftno}, #{rightno}, #{weight})
+	</insert>
+	
+	<select id="getCompareHistory" parameterType="string" resultType="CompareHistory">
+		select * from compare_history
+		where userid = #{userid}
+		order by date
+	</select>
+	
+	
+	<select id="getFullTable" resultType="HouseDeal">
+		select * from housedeal 
+		order by code
+	</select>
+	
+	<insert id="score_insert" parameterType="hashMap">
+		insert into housedeal_score
+		values (#{dealno}, #{score_dealAmount}, #{score_buildYear}, #{score_area})
+	</insert>
+	
+	<select id="getScore" resultType="HouseScore">
+		select * from housedeal_score
+		where no = #{no}
+	</select>
+	
+</mapper>
